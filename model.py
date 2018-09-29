@@ -1,6 +1,3 @@
-import dateutil.parser
-
-
 class Project:
 
     def __init__(self, name, id):
@@ -21,12 +18,10 @@ class Item:
         self.order = order
         self.indent = indent
         self.due_date = due_date
-        self.subitems = []
 
 
     def __str__(self):
-        return "%s %s %s %s (%s) %s" % \
-               (self.id, self.name, self.order, self.indent, self.due_date, list(map(str, self.subitems)))
+        return "%s (%s)" % (self.name, self.due_date)
 
 
 class Node:
@@ -52,17 +47,5 @@ class Node:
         for child in self.children:
             print(end=' ' * 4 * indent_level)
             child.display()
-
-        return self
-
-
-    def sort(self):
-        if self is None:
-            return self
-
-        self.children = sorted(self.children,
-                               key=lambda x: dateutil.parser.parse(x.item.due_date) if x.item.due_date is not None else dateutil.parser.parse('01 Jan 1970 01:59:59 +0000'))
-        for child in self.children:
-            child.sort()
 
         return self

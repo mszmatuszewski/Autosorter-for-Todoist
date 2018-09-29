@@ -1,9 +1,23 @@
+import dateutil.parser
 from todoist.api import TodoistAPI
 
 from model import Item, Node, Project
 
 
+def sort(node):
+    if node is None:
+        return node
+
+    node.children = sorted(node.children,
+                           key=lambda x: dateutil.parser.parse(x.item.due_date) if x.item.due_date is not None else dateutil.parser.parse('01 Jan 1970 01:59:59 +0000'))
+    for child in node.children:
+        sort(child)
+
+    return node
+
+
 def fetch_secret():
+    print("Retrieving API key")
     with open('secret.txt', 'r') as f:
         return f.readline().strip()
 
@@ -13,13 +27,17 @@ def populate_projects(api):
     projects = {}
     api_projects = api.state['projects']
     api_items = api.state['items']
+
     for api_project in api_projects:
         projects[api_project['id']] = Project(api_project['name'], api_project['id'])
+        print('Processed', api_project['name'])
+
     for api_item in api_items:
         if api_item['in_history'] != 0:
             continue
         item = Item(api_item['content'], api_item['id'], api_item['item_order'], api_item['indent'], api_item['due_date_utc'])
         projects[api_item['project_id']].items.append(item)
+        print('Added task', api_item['content'], 'to project', api.projects.get_by_id(api_item['project_id'])['name'])
     for id, project in projects.items():
         project.items = sorted(project.items, key=lambda x: x.order)
 
@@ -75,10 +93,19 @@ def main():
     api = TodoistAPI(fetch_secret())
     projects = populate_projects(api)
     trees = [build_tree(project) for id, project in projects.items()]
-    trees = list(map(Node.sort, trees))
+    trees = list(map(sort, trees))
+    print()
+    print("New order: ")
+    for tree in trees:
+        tree.display()
+
+    print()
+    print("Building Sync API request")
     new_orders_indents = build_request(trees)
     api.items.update_orders_indents(new_orders_indents)
+    print("Committing changes")
     api.commit()
+    print("Done!")
 
 
 if __name__ == '__main__':
