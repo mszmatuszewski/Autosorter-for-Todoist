@@ -17,7 +17,6 @@ def sort(node):
 
 
 def fetch_secret():
-    print("Retrieving API key")
     with open('secret.txt', 'r') as f:
         return f.readline().strip()
 
@@ -30,14 +29,12 @@ def populate_projects(api):
 
     for api_project in api_projects:
         projects[api_project['id']] = Project(api_project['name'], api_project['id'])
-        print('Processed', api_project['name'])
 
     for api_item in api_items:
         if api_item['in_history'] != 0:
             continue
         item = Item(api_item['content'], api_item['id'], api_item['item_order'], api_item['indent'], api_item['due_date_utc'])
         projects[api_item['project_id']].items.append(item)
-        print('Added task', api_item['content'], 'to project', api.projects.get_by_id(api_item['project_id'])['name'])
     for id, project in projects.items():
         project.items = sorted(project.items, key=lambda x: x.order)
 
@@ -46,7 +43,6 @@ def populate_projects(api):
 
 def build_tree(project):
     if len(project.items) == 0:
-        print('Empty project: %s' % project.name)
         return None
 
     root = Node(Item(project.name, -1, None, -1, None), None)
@@ -94,18 +90,9 @@ def main():
     projects = populate_projects(api)
     trees = [build_tree(project) for id, project in projects.items()]
     trees = list(map(sort, trees))
-    print()
-    print("New order: ")
-    for tree in trees:
-        tree.display()
-
-    print()
-    print("Building Sync API request")
     new_orders_indents = build_request(trees)
     api.items.update_orders_indents(new_orders_indents)
-    print("Committing changes")
     api.commit()
-    print("Done!")
 
 
 if __name__ == '__main__':
