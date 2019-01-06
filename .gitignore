@@ -43,4 +43,4 @@ venv.bak/
 Autosorter for Todoist.iml
 
 #auth secrets
-secret.txt
+autosorter/secret.txt
