@@ -21,7 +21,7 @@ Sorting criteria provided out-of-the-box:
  -  responsible_uid
  -  date_added
  
-Additional customisation possible via 
+Additional customisation possible via extending the SPI.
 
 Not created by, affiliated with, or supported by Doist.
 
