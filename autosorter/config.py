@@ -1,4 +1,5 @@
 from autosorter.spi import *
+import os
 
 """ 
 Primary configuration hook. See SPI docs for details. Defaults to SortingBy(due_date).
@@ -26,5 +27,4 @@ def secret():
 
     :rtype: str
     """
-    with open('secret.txt', 'r') as f:
-        return f.readline().strip()
+    return os.environ['TODOIST_API_KEY']
