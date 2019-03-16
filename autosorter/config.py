@@ -2,10 +2,10 @@ from autosorter.spi import *
 import os
 
 """ 
-Primary configuration hook. See SPI docs for details. Defaults to SortingBy(due_date).
+Primary configuration hook. See SPI docs for details. Defaults to OrderBy(due_date).
 
 Example usage:
-sorter = SortingBy(name).then_by(due_date, reversed=True).then_by(project_id)
+sorter = OrderBy(name).then_by(due_date, reversed=True).then_by(project_id)
 
 Sorting criteria provided out-of-the-box:
  -  task_id
@@ -18,7 +18,7 @@ Sorting criteria provided out-of-the-box:
  -  responsible_uid
  -  date_added
 """
-sorter = DefaultSorter()
+order = DefaultOrder()
 
 
 def secret():

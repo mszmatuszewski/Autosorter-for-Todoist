@@ -1,7 +1,7 @@
 import dateutil.parser
 
 
-class SortingBy:
+class OrderBy:
 
     def __init__(self, key_function, reversed=False, *, _successor=None):
         """
@@ -9,7 +9,7 @@ class SortingBy:
 
         :param callable key_func: the key extractor function. Several common functions are included in the SPI.
         :param bool reversed: specifies whether the sorting order should be reversed.
-        :param SortingBy _successor: a SortingBy object to be used for further sorting.
+        :param OrderBy _successor: a OrderBy object to be used for further sorting.
         """
         self._key_function = key_function
         self._successor = _successor
@@ -34,13 +34,13 @@ class SortingBy:
 
         :param callable key_func: the key extractor function. Several common functions are included in the SPI.
         :param bool reversed: specifies whether the sorting order should be reversed.
-        :return: a SortingBy object representing the chain of sorting strategies.
-        :rtype: SortingBy
+        :return: a OrderBy object representing the chain of sorting strategies.
+        :rtype: OrderBy
         """
-        return SortingBy(key_func, reversed=reversed, _successor=self)
+        return OrderBy(key_func, reversed=reversed, _successor=self)
 
 
-class DefaultSorter(SortingBy):
+class DefaultOrder(OrderBy):
     """Sorts tasks by their due date."""
 
 

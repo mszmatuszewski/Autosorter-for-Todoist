@@ -7,7 +7,7 @@ Requires a Todoist API key in a 'secret.txt' file in the main folder.
 To configure, edit the config.py file.
 Example configuration: 
 ```python
-sorter = SortingBy(name).then_by(due_date, reversed=True).then_by(project_id)
+sorter = OrderBy(name).then_by(due_date, reversed=True).then_by(project_id)
 ```
 
 Sorting criteria provided out-of-the-box:

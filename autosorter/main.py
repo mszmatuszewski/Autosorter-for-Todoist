@@ -1,4 +1,4 @@
-from autosorter.config import sorter
+from autosorter.config import order
 from autosorter.model import *
 from autosorter.todoist_connector import *
 
@@ -14,7 +14,7 @@ def sort(root):
     if root is None:
         return root
 
-    root.children = sorter(root.children)
+    root.children = order(root.children)
     for child in root.children:
         sort(child)
 

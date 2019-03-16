@@ -74,6 +74,7 @@ def build_update_request(trees):
             nonlocal rq
             if node.item.id != -1:
                 rq[node.item.id] = [order, node.item.indent]
+                print("Assigned", node.item.name, "with id", node.item.id, "order value", order)
                 order += 1
             for child in node.children:
                 traverse(child)

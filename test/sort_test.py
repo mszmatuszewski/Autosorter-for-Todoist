@@ -14,7 +14,7 @@ class TestSort(unittest.TestCase):
             Node(Item("D", due_date="01 Oct 2018 01:59:59 +0000"))
         ]
 
-        result = DefaultSorter()(data)
+        result = DefaultOrder()(data)
 
         self.assertListEqual([data[0], data[3], data[2], data[1]], result)
 
@@ -27,7 +27,7 @@ class TestSort(unittest.TestCase):
             Node(Item(name="B", project_id=1))
         ]
 
-        result = SortingBy(project_id).then_by(name)(data)
+        result = OrderBy(project_id).then_by(name)(data)
 
         self.assertListEqual([data[2], data[3], data[0], data[1]], result)
 
@@ -56,7 +56,7 @@ class TestSort(unittest.TestCase):
             Node(Item(name="syiaw", id=4, order=1, user_id=5, project_id=3, priority=3, responsible_uid=3))
         ]
 
-        result = SortingBy(task_id).then_by(item_order).then_by(user_id).then_by(project_id).then_by(name).then_by(priority).then_by(responsible_uid)(data)
+        result = OrderBy(task_id).then_by(item_order).then_by(user_id).then_by(project_id).then_by(name).then_by(priority).then_by(responsible_uid)(data)
 
         self.assertListEqual([data[6], data[14], data[2], data[3], data[10], data[11], data[17], data[13], data[4], data[15],
                               data[19], data[0], data[18], data[9], data[12], data[8], data[7], data[5], data[1], data[16]], result)

@@ -87,7 +87,7 @@ class Node:
         self.children = []
 
     def __repr__(self):
-        return self.item.name
+        return repr(self.item) + '\n    ' + '\n    '.join(map(repr, self.children))
 
     def display(self):
         if self is None:
