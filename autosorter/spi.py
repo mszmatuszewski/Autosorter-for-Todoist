@@ -25,6 +25,7 @@ class OrderBy:
         :rtype: list
         """
         temp = sorted(coll, key=self._key_function, reverse=self._reversed)
+        print(temp)
         return self._successor(temp) if self._successor else temp
 
 
@@ -45,7 +46,7 @@ class DefaultOrder(OrderBy):
 
 
     def __init__(self):
-        super().__init__(due_date)
+        super().__init__(priority, _successor=OrderBy(due_date), reversed=True)
 
 
 def task_id(node):

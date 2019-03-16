@@ -10,14 +10,28 @@ class TestSort(unittest.TestCase):
         data = [
             Node(Item("A")),
             Node(Item("B", due_date="01 Dec 2018 03:59:59 +0000")),
-            Node(Item("C", due_date="01 Dec 2018 01:59:59 +0000")),
-            Node(Item("D", due_date="01 Oct 2018 01:59:59 +0000"))
+            Node(Item("C", due_date="01 Dec 2018 01:59:59 +0000", priority=3)),
+            Node(Item("D", due_date="01 Oct 2018 01:59:59 +0000", priority=4))
         ]
 
         result = DefaultOrder()(data)
+        print(data, result)
 
         self.assertListEqual([data[0], data[3], data[2], data[1]], result)
 
+
+    def test_default_explicit(self):
+        data = [
+            Node(Item("A")),
+            Node(Item("B", due_date="01 Dec 2018 03:59:59 +0000")),
+            Node(Item("C", due_date="01 Dec 2018 01:59:59 +0000", priority=3)),
+            Node(Item("D", due_date="01 Oct 2018 01:59:59 +0000", priority=4))
+        ]
+
+        result = OrderBy(due_date).then_by(priority)(data)
+        print(data, result)
+
+        self.assertListEqual([data[0], data[3], data[2], data[1]], result)
 
     def test_project_and_name(self):
         data = [
