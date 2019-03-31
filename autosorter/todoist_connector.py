@@ -19,17 +19,6 @@ def api_init():
     __api = TodoistAPI(secret())
 
 
-def api_update_projects(trees):
-    """
-    Builds the update request and sends it to Todoist API.
-
-    :param list trees: a list of project trees.
-    """
-    new_orders_indents = build_update_request(trees)
-    __api.items.update_orders_indents(new_orders_indents)
-    __api.commit()
-
-
 def api_retrieve_projects():
     """
     Retrieves project data from Todoist.
@@ -54,6 +43,26 @@ def api_retrieve_projects():
     return projects
 
 
+def api_update_projects(trees):
+    """
+    Builds the update request and sends it to Todoist API.
+
+    :param list trees: a list of project trees.
+    """
+    new_orders = build_update_request(trees)
+    apply_changes(new_orders)
+    __api.commit()
+
+
+def apply_changes(new_orders):
+    """
+    Updates API items based on the parameter.
+    :param new_orders: dictionary mapping item IDs to ordering numbers.
+    """
+    for id, order in new_orders.items():
+        __api.items.get_by_id(id).reorder(child_order=order)
+
+
 def build_update_request(trees):
     """
     Generates a Todoist update request from a list of project trees.
@@ -73,7 +82,7 @@ def build_update_request(trees):
             nonlocal order
             nonlocal rq
             if node.item.id != -1:
-                rq[node.item.id] = [order, node.item.indent]
+                rq[node.item.id] = order
                 print("Assigned", node.item.name, "with id", node.item.id, "order value", order)
                 order += 1
             for child in node.children:
