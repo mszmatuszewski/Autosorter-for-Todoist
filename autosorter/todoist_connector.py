@@ -59,8 +59,7 @@ def apply_changes(new_orders):
     Updates API items based on the parameter.
     :param new_orders: dictionary mapping item IDs to ordering numbers.
     """
-    for id, order in new_orders.items():
-        __api.items.get_by_id(id).reorder(child_order=order)
+    __api.items.reorder(items=[{'id': id, 'child_order': order} for id, order in new_orders.items()])
 
 
 def build_update_request(trees):
