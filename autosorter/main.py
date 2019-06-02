@@ -32,7 +32,7 @@ def build_tree(project):
     if len(project.items) == 0:
         return None
 
-    root = Node(Item(project.name, id=-1, indent=-1))
+    root = Node(Item(project.name, id=-1))
     for item in project.items:
         node = Node(item, root)
         root.children.append(node)

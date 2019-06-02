@@ -35,6 +35,7 @@ def api_retrieve_projects():
     for api_item in api_items:
         if api_item['in_history'] != 0:
             continue
+        print(api_item)
         item = map_to_item(api_item)
         projects[api_item['project_id']].items.append(item)
     for project in projects.values():

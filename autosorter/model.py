@@ -18,7 +18,7 @@ class Project:
 
 class Item:
 
-    def __init__(self, name, id=None, order=None, indent=None, due_date=None, user_id=None, project_id=None,
+    def __init__(self, name, id=None, order=None, due_date=None, user_id=None, project_id=None,
                  priority=None, responsible_uid=None, date_added=None):
         """
         Represents a Todoist task.
@@ -26,7 +26,6 @@ class Item:
         :param str name: The text of the task.
         :param int id: The id of the task.
         :param int order: The order of the task inside a project (the smallest value would place the task at the top).
-        :param int indent: The indent of the task (a number between 1 and 5, where 1 is top-level).
         :param str due_date: The date of the task in the format Mon 07 Aug 2006 12:34:56 +0000 (or None if not set). For all day task (i.e. task due “Today”), the time part will be set as xx:xx:59.
         :param int user_id: The owner of the task.
         :param int project_id: Project that the task resides in.
@@ -39,7 +38,6 @@ class Item:
         self.name = name
         self.id = id
         self.order = order
-        self.indent = indent
         self.due_date = due_date
         self.user_id = user_id
         self.project_id = project_id
@@ -62,9 +60,8 @@ def map_to_item(api_item):
     """
     return Item(api_item['content'],
                 api_item['id'],
-                api_item['item_order'],
-                api_item['indent'],
-                api_item['due_date_utc'],
+                api_item['child_order'],
+                api_item['due']['date'],
                 api_item['user_id'],
                 api_item['project_id'],
                 api_item['priority'],
