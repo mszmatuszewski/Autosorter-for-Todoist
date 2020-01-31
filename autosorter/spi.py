@@ -82,7 +82,7 @@ def due_date(node):
     if node.item.due_date is not None:
         return dateutil.parser.parse(node.item.due_date)
     else:
-        return dateutil.parser.parse('01 Jan 1970 01:59:59 +0000')
+        return dateutil.parser.parse('01 Jan 1970 01:59:59')
 
 
 def user_id(node):
