@@ -61,7 +61,7 @@ def map_to_item(api_item):
     return Item(api_item['content'],
                 api_item['id'],
                 api_item['child_order'],
-                api_item['due']['date'],
+                api_item['due']['date'] if api_item['due'] else None,
                 api_item['user_id'],
                 api_item['project_id'],
                 api_item['priority'],
