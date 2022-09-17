@@ -1,4 +1,4 @@
-from autosorter.spi import *
+from .spi import *
 import os
 
 """ 

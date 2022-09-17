@@ -1,7 +1,7 @@
 import unittest
 
-from autosorter.model import *
-from autosorter.spi import *
+from .model import *
+from .spi import *
 
 
 class TestSort(unittest.TestCase):
