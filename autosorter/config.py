@@ -1,4 +1,4 @@
-from .spi import *
+from spi import *
 import os
 
 """ 

@@ -1,7 +1,7 @@
 from todoist import TodoistAPI
 
-from .config import secret
-from .model import Project, map_to_item
+from config import secret
+from model import Project, map_to_item
 
 __all__ = ['api_retrieve_projects', 'api_update_projects', 'api_init']
 

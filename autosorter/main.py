@@ -1,6 +1,6 @@
-from .config import order
-from .model import *
-from .todoist_connector import *
+from config import order
+from model import *
+from todoist_connector import *
 
 
 def sort(root):
