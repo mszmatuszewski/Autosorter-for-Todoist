@@ -40,7 +40,7 @@ def build_tree(project):
     return root
 
 
-def main():
+def main(_event, _context):
     """Main script. Retrieves projects from the Todoist API, generates a new order scheme and updates the data on the server."""
     print("Initialising API connection")
     api_init()
@@ -60,4 +60,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(None, None)
